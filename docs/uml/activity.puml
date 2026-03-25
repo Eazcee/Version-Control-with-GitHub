@@ -1,0 +1,38 @@
+@startuml
+start
+
+:Open public/index.html;
+:Enter loginName/loginPassword;
+:doLogin() in public/js/code.js;
+
+:POST /api/Login.php\npayload {login, password};
+if (Login successful?) then (yes)
+  :Save cookie (firstName,lastName,userId);
+  :Redirect to public/color.html;
+  :readCookie();
+  if (Cookie valid?) then (yes)
+    :Choose action in color.html;
+    if (Search color?) then (yes)
+      :searchColor();
+      :POST /api/SearchColors.php\npayload {search, userId};
+      if (Results found?) then (yes)
+        :Display color list;
+      else (no)
+        :Show API error;
+      endif
+    else (no)
+      :addColor();
+      :POST /api/AddColor.php\npayload {color, userId};
+      :Show "Color has been added";
+    endif
+    :Optional doLogout();
+    :Clear cookie and redirect to index.html;
+  else (no)
+    :Redirect to public/index.html;
+  endif
+else (no)
+  :Show "User/Password combination incorrect";
+endif
+
+stop
+@enduml

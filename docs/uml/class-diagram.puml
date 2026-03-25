@@ -1,0 +1,67 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+class "public/js/code.js" as CodeJs {
+  - urlBase : string
+  - extension : string
+  - userId : int
+  - firstName : string
+  - lastName : string
+  + doLogin()
+  + saveCookie()
+  + readCookie()
+  + doLogout()
+  + addColor()
+  + searchColor()
+}
+
+class "api/Login.php" as LoginApi {
+  + getRequestInfo()
+  + sendResultInfoAsJson(obj)
+  + returnWithError(err)
+  + returnWithInfo(firstName, lastName, id)
+}
+
+class "api/AddColor.php" as AddColorApi {
+  + getRequestInfo()
+  + sendResultInfoAsJson(obj)
+  + returnWithError(err)
+}
+
+class "api/SearchColors.php" as SearchColorsApi {
+  + getRequestInfo()
+  + sendResultInfoAsJson(obj)
+  + returnWithError(err)
+  + returnWithInfo(searchResults)
+}
+
+class "public/index.html" as IndexHtml
+class "public/color.html" as ColorHtml
+
+class "Users" as UsersTable <<table>> {
+  + ID : INT (PK)
+  + FirstName : VARCHAR(50)
+  + LastName : VARCHAR(50)
+  + Login : VARCHAR(50)
+  + Password : VARCHAR(50)
+}
+
+class "Colors" as ColorsTable <<table>> {
+  + ID : INT (PK)
+  + Name : VARCHAR(50)
+  + UserID : INT
+}
+
+IndexHtml --> CodeJs : calls doLogin()
+ColorHtml --> CodeJs : calls readCookie(), searchColor(), addColor(), doLogout()
+
+CodeJs --> LoginApi : POST /Login.php
+CodeJs --> AddColorApi : POST /AddColor.php
+CodeJs --> SearchColorsApi : POST /SearchColors.php
+
+LoginApi --> UsersTable : SELECT ID,firstName,lastName\nWHERE Login,Password
+AddColorApi --> ColorsTable : INSERT (UserId,Name)
+SearchColorsApi --> ColorsTable : SELECT Name WHERE Name LIKE and UserID
+
+UsersTable "1" <-- "0..*" ColorsTable : UserID
+@enduml

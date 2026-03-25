@@ -1,0 +1,42 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+
+actor "User" as User
+
+rectangle "COLORS Web App" {
+  usecase "Log in" as UC_Login
+  usecase "Add color" as UC_AddColor
+  usecase "Search colors" as UC_SearchColors
+  usecase "Log out" as UC_Logout
+}
+
+User --> UC_Login
+User --> UC_AddColor
+User --> UC_SearchColors
+User --> UC_Logout
+
+note right of UC_Login
+Frontend: public/index.html
+JS: doLogin() in public/js/code.js
+API: /api/Login.php
+end note
+
+note right of UC_AddColor
+Frontend: public/color.html
+JS: addColor() in public/js/code.js
+API: /api/AddColor.php
+end note
+
+note right of UC_SearchColors
+Frontend: public/color.html
+JS: searchColor() in public/js/code.js
+API: /api/SearchColors.php
+end note
+
+note right of UC_Logout
+Frontend: public/color.html
+JS: doLogout() in public/js/code.js
+Redirect: public/index.html
+end note
+@enduml
