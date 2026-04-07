@@ -1,0 +1,31 @@
+name: Lint Colors App
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run HTML lint
+        run: npm run lint:html
+
+      - name: Run CSS lint
+        run: npm run lint:css
+
+      - name: Run JavaScript lint
+        run: npm run lint:js
