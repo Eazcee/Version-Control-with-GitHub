@@ -1,11 +1,11 @@
-name: Lint Colors App
+name: Lint and Test Colors App
 
 on:
   push:
   pull_request:
 
 jobs:
-  lint:
+  lint-and-test:
     runs-on: ubuntu-latest
 
     steps:
@@ -29,3 +29,6 @@ jobs:
 
       - name: Run JavaScript lint
         run: npm run lint:js
+
+      - name: Run tests
+        run: npm test

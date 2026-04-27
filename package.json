@@ -1,19 +1,21 @@
 {
-    "name": "colors-lamp",
-    "private": true,
-    "type": "module",
-    "scripts": {
-      "lint:html": "htmlhint \"public/**/*.html\" \"*.html\"",
-      "lint:css": "stylelint \"public/**/*.css\"",
-      "lint:js": "eslint \"public/**/*.js\"",
-      "lint": "npm run lint:html && npm run lint:css && npm run lint:js"
-    },
-    "devDependencies": {
-      "@eslint/js": "^9.0.0",
-      "eslint": "^10.0.0",
-      "globals": "^16.0.0",
-      "htmlhint": "^1.7.0",
-      "stylelint": "^17.0.0",
-      "stylelint-config-standard": "^40.0.0"
-    }
+  "name": "colors-lamp",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "lint:html": "htmlhint \"public/**/*.html\" \"*.html\"",
+    "lint:css": "stylelint \"public/**/*.css\"",
+    "lint:js": "eslint \"public/**/*.js\" \"lib/**/*.js\" \"tests/**/*.js\" \"jest.config.js\"",
+    "lint": "npm run lint:html && npm run lint:css && npm run lint:js",
+    "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "eslint": "^10.0.0",
+    "globals": "^16.0.0",
+    "htmlhint": "^1.7.0",
+    "jest": "^29.7.0",
+    "stylelint": "^17.0.0",
+    "stylelint-config-standard": "^40.0.0"
   }
+}
